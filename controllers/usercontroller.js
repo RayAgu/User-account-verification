@@ -209,7 +209,25 @@ const signOut = async(req, res) => {
      })
    }
     
-} 
+}
+
+//all users
+const allUsers = async( req, res ) => {
+    try {
+        const alUsers = await userModel.find();
+
+        res.status(200).json({
+            message: "All users",
+            data: alUsers
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+
 
 const genToken = async ( user ) => {
     const token = await jwt.sign({
@@ -222,10 +240,12 @@ const genToken = async ( user ) => {
 }
 
 
+
 module.exports = {
     signUp,
     verifyEmail,
     resendVerificationEmail,
     signIn,
     signOut,
+    allUsers,
 }
